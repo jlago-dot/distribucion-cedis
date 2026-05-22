@@ -8,106 +8,145 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --green:#0F6E56;--green-l:#E1F5EE;--green-m:#1D9E75;
-  --blue:#378ADD;--blue-l:#E6F1FB;
+  --green:#0F6E56;--green-l:#E1F5EE;--green-m:#1D9E75;--green-b:#9FE1CB;
   --amber:#EF9F27;--amber-l:#FAEEDA;--amber-d:#854F0B;
-  --red:#E24B4A;--red-l:#FCEBEB;--red-d:#A32D2D;
+  --red:#E24B4A;--red-l:#FCEBEB;--red-d:#A32D2D;--red-b:#F09595;
   --border:#e2e2de;--bg:#f0f0ec;--surface:#fff;
   --text:#1a1a18;--muted:#666;--hint:#aaa;
   --r:8px;--rl:12px;
   font-family:-apple-system,'Segoe UI',system-ui,sans-serif;
 }
-
-/* ── Print ── */
-@media print {
-  body { background: white; padding: 0; }
-  .no-print { display: none !important; }
-  .card-grid { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
-  .suc-card { break-inside: avoid; box-shadow: none !important; border: 1px solid #ccc !important; }
-  .card-body { max-height: none !important; overflow: visible !important; }
-  .top-bar, #step-upload, #step-loading { display: none !important; }
+@media print{
+  .no-print{display:none!important}
+  body{background:#fff;padding:0}
+  .card-grid{grid-template-columns:1fr 1fr!important;gap:10px!important}
+  .suc-card{break-inside:avoid;border:1px solid #ccc!important}
+  .card-body{max-height:none!important;overflow:visible!important}
+  #step-upload,#step-loading,.progress-wrap,.top-bar,.scanner-panel{display:none!important}
 }
-
-body{background:var(--bg);color:var(--text);min-height:100vh;padding:1.25rem}
+body{background:var(--bg);color:var(--text);min-height:100vh;padding:1rem}
 
 /* ── Top bar ── */
-.top-bar{display:flex;align-items:center;gap:12px;margin-bottom:1.25rem;flex-wrap:wrap}
-.logo{width:34px;height:34px;background:var(--green-l);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.title{font-size:15px;font-weight:600;color:var(--text)}
-.subtitle{font-size:11px;color:var(--muted)}
+.top-bar{display:flex;align-items:center;gap:10px;margin-bottom:.75rem;flex-wrap:wrap}
+.logo{width:32px;height:32px;background:var(--green-l);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.t-title{font-size:15px;font-weight:600}.t-sub{font-size:11px;color:var(--muted)}
 .spacer{flex:1}
-.top-actions{display:flex;gap:8px;align-items:center}
-
-/* ── Upload card ── */
-.upload-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:1.5rem;max-width:680px;margin:0 auto}
-
-/* ── Drop zones ── */
-.dz-wrap{margin-bottom:8px}
-.dropzone{border:1.5px dashed var(--border);border-radius:var(--r);padding:13px 15px;cursor:pointer;background:var(--bg);display:flex;align-items:center;gap:12px;transition:border-color .15s,background .15s}
-.dropzone:hover{border-color:#999}
-.dropzone.drag-over{border-color:var(--green-m);background:var(--green-l)}
-.dz-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.dz-label{font-size:13px;font-weight:500}.dz-sub{font-size:11px;color:var(--muted);margin-top:2px}
-.dz-badge{display:none;margin-left:auto;font-size:11px;font-weight:500;border-radius:6px;padding:3px 9px;flex-shrink:0}
-.chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
-.chip{display:flex;align-items:center;gap:5px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:11px}
-.chip-name{max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text)}
-.chip-rm{background:none;border:none;cursor:pointer;padding:0;color:var(--muted);font-size:15px;line-height:1}
-
-/* ── Buttons ── */
-.btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 16px;font-size:13px;font-weight:500;border-radius:var(--r);border:none;cursor:pointer;transition:all .15s;white-space:nowrap}
-.btn:disabled{opacity:.4;cursor:not-allowed}
-.btn-primary{background:var(--green);color:#fff;width:100%;margin-top:10px}
-.btn-primary:not(:disabled):hover{background:#0a5c47}
-.btn-sm{background:var(--surface);color:var(--muted);border:1px solid var(--border)}
+.filter-bar{display:flex;gap:6px;flex-wrap:wrap}
+.f-btn{padding:6px 12px;font-size:12px;font-weight:500;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap}
+.f-btn:hover{border-color:#999;color:var(--text)}
+.f-btn.active{background:var(--text);color:#fff;border-color:var(--text)}
+.f-btn.active-revisar{background:var(--amber-d);color:#fff;border-color:var(--amber-d)}
+.f-btn.active-sin{background:var(--red-d);color:#fff;border-color:var(--red-d)}
+.act-btns{display:flex;gap:6px;flex-wrap:wrap}
+.btn-sm{padding:7px 12px;font-size:12px;font-weight:500;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap;transition:background .15s}
 .btn-sm:hover{background:var(--bg)}
-.btn-icon{width:32px;height:32px;padding:0;border-radius:6px;background:rgba(255,255,255,0.2);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:inherit;transition:background .15s}
-.btn-icon:hover{background:rgba(255,255,255,0.35)}
+.btn-scan{background:var(--green);color:#fff;border-color:var(--green)}
+.btn-scan:hover{background:#0a5c47!important}
+.btn-scan.active{background:#c0392b;border-color:#c0392b}
+.btn-scan.active:hover{background:#a93226!important}
 
-/* ── Summary row ── */
-.summary-row{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;align-items:center}
-.sum-pill{font-size:12px;font-weight:500;border-radius:20px;padding:5px 12px;border:1px solid transparent}
-.sum-rep{background:var(--green-l);color:var(--green);border-color:#9FE1CB}
-.sum-neg{background:var(--amber-l);color:var(--amber-d);border-color:var(--amber)}
-.sum-sin{background:var(--red-l);color:var(--red-d);border-color:#F09595}
+/* ── Progress bar ── */
+.progress-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:10px 14px;margin-bottom:.75rem;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.progress-label{font-size:12px;color:var(--muted);white-space:nowrap}
+.progress-label strong{color:var(--text)}
+.progress-track{flex:1;min-width:80px;height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--green-m);border-radius:3px;transition:width .3s}
+.progress-pct{font-size:12px;font-weight:600;color:var(--green);min-width:35px;text-align:right}
+.conf-pills{display:flex;gap:5px;flex-wrap:wrap}
+.cpill{font-size:11px;border-radius:10px;padding:2px 8px;font-weight:500}
+.cpill-s{background:var(--green-l);color:var(--green)}
+.cpill-r{background:var(--amber-l);color:var(--amber-d)}
+.cpill-c{background:var(--red-l);color:var(--red-d)}
 
-/* ── Card grid ── */
-.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+/* ── Scanner panel ── */
+.scanner-panel{background:var(--surface);border:2px solid var(--green-m);border-radius:var(--rl);padding:1rem;margin-bottom:.75rem;display:none}
+.scanner-panel.visible{display:block}
+.scan-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.scan-title{font-size:14px;font-weight:600;color:var(--green)}
+.scan-hint{font-size:12px;color:var(--muted)}
+.scan-input-wrap{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+.scan-input{flex:1;padding:12px 14px;font-size:16px;border:2px solid var(--green-m);border-radius:var(--r);background:#f8fdfb;outline:none;font-family:'Courier New',monospace;letter-spacing:.05em}
+.scan-input:focus{border-color:var(--green);background:#fff}
+.scan-input::placeholder{font-size:13px;letter-spacing:0;font-family:inherit;color:var(--hint)}
 
-/* ── Sucursal card ── */
-.suc-card{background:var(--surface);border-radius:var(--rl);overflow:hidden;border:1px solid var(--border)}
-.card-header{padding:12px 14px;display:flex;align-items:center;gap:10px;background:var(--green);color:#fff}
-.card-header.is-sin{background:#c0392b}
-.card-header.is-neg{background:var(--amber-d)}
-.card-title{font-size:14px;font-weight:600;flex:1;letter-spacing:0.01em}
-.card-count{font-size:11px;opacity:0.85;background:rgba(255,255,255,0.2);border-radius:20px;padding:2px 9px;white-space:nowrap}
-.card-body{padding:0;max-height:380px;overflow-y:auto}
+/* ── Scan result card ── */
+.scan-result{border-radius:var(--r);padding:14px 16px;display:none;animation:fadeIn .2s ease}
+.scan-result.visible{display:block}
+.scan-result.ok{background:var(--green-l);border:1.5px solid var(--green-b)}
+.scan-result.warn{background:var(--amber-l);border:1.5px solid #F5C47A}
+.scan-result.err{background:var(--red-l);border:1.5px solid var(--red-b)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.scan-product-name{font-size:15px;font-weight:600;color:var(--text);margin-bottom:8px}
+.scan-destinations{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.scan-dest{display:flex;flex-direction:column;align-items:center;background:#fff;border:1.5px solid var(--green-b);border-radius:var(--r);padding:8px 16px;min-width:90px}
+.scan-dest-suc{font-size:13px;font-weight:600;color:var(--green)}
+.scan-dest-qty{font-size:22px;font-weight:700;color:var(--text);line-height:1.1}
+.scan-dest-lbl{font-size:10px;color:var(--muted)}
+.scan-meta{font-size:11px;color:var(--muted);margin-top:4px}
+.scan-err-msg{font-size:14px;font-weight:600;color:var(--red-d)}
+.scan-err-sub{font-size:12px;color:var(--muted);margin-top:3px}
+.scan-counter{display:flex;gap:12px;margin-top:10px;padding-top:10px;border-top:1px solid rgba(0,0,0,.06)}
+.scan-cnt{text-align:center}
+.scan-cnt-num{font-size:20px;font-weight:700}
+.scan-cnt-lbl{font-size:10px;color:var(--muted)}
 
-/* ── Product rows ── */
-.prod-row{display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:0.5px solid var(--border);transition:background .1s}
+/* ── Upload ── */
+.upload-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:1.5rem;max-width:660px;margin:0 auto}
+.dz-wrap{margin-bottom:8px}
+.dropzone{border:1.5px dashed var(--border);border-radius:var(--r);padding:12px 14px;cursor:pointer;background:var(--bg);display:flex;align-items:center;gap:12px;transition:border-color .15s,background .15s}
+.dropzone:hover{border-color:#999}.dropzone.drag-over{border-color:var(--green-m);background:var(--green-l)}
+.dz-icon{width:34px;height:34px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.dz-label{font-size:13px;font-weight:500}.dz-sub{font-size:11px;color:var(--muted);margin-top:1px}
+.dz-badge{display:none;margin-left:auto;font-size:11px;font-weight:500;border-radius:6px;padding:2px 8px;flex-shrink:0}
+.chips{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}
+.chip{display:flex;align-items:center;gap:4px;background:var(--bg);border:1px solid var(--border);border-radius:5px;padding:2px 7px;font-size:11px}
+.chip-name{max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text)}
+.chip-rm{background:none;border:none;cursor:pointer;padding:0;color:var(--muted);font-size:14px;line-height:1}
+.btn-run{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px;font-size:13px;font-weight:500;border-radius:var(--r);border:none;cursor:pointer;background:var(--green);color:#fff;margin-top:10px;transition:background .15s}
+.btn-run:disabled{opacity:.4;cursor:not-allowed}
+.btn-run:not(:disabled):hover{background:#0a5c47}
+.helper{font-size:11px;color:var(--hint);text-align:center;margin-top:6px}
+.alert-r{padding:10px 14px;border-radius:var(--r);font-size:12px;background:var(--red-l);border:1px solid var(--red-b);color:var(--red-d);margin-top:10px;display:none}
+.debug{background:#f0f0ec;border:1px solid var(--border);border-radius:var(--r);padding:10px 14px;font-size:11px;color:var(--muted);margin-top:10px;font-family:'Courier New',monospace;line-height:1.6;display:none}
+.loading{padding:3rem 0;text-align:center}
+.spin{font-size:26px;display:inline-block;animation:spin 1s linear infinite;margin-bottom:10px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── Cards ── */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px}
+.suc-card{background:var(--surface);border-radius:var(--rl);overflow:hidden;border:1px solid var(--border);transition:border-color .2s}
+.suc-card.all-confirmed{border-color:var(--green-m);border-width:1.5px}
+.suc-card.card-hidden{display:none}
+.card-header{padding:11px 14px;display:flex;align-items:center;gap:8px;color:#fff}
+.card-header.h-normal{background:var(--green)}
+.card-header.h-sin{background:#c0392b}
+.card-title{font-size:13px;font-weight:600;flex:1;letter-spacing:.01em}
+.card-conf-summary{font-size:10px;opacity:.85;display:flex;gap:4px;flex-wrap:wrap}
+.ccs-pill{background:rgba(255,255,255,.2);border-radius:8px;padding:1px 6px;white-space:nowrap}
+.card-check-count{font-size:11px;background:rgba(255,255,255,.25);border-radius:10px;padding:2px 8px;white-space:nowrap;flex-shrink:0}
+.card-body{max-height:360px;overflow-y:auto}
+.prod-row{display:flex;align-items:center;gap:8px;padding:8px 14px;border-bottom:.5px solid var(--border);transition:background .15s}
 .prod-row:last-child{border-bottom:none}
-.prod-row:hover{background:#fafaf8}
-.qty-badge{min-width:28px;height:28px;border-radius:6px;background:var(--green-l);color:var(--green);font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.qty-badge.is-partial{background:#FAEEDA;color:var(--amber-d)}
+.prod-row.is-confirmed{background:#f4fbf7}
+.prod-row.is-confirmed .prod-name{color:var(--muted);text-decoration:line-through;text-decoration-color:#bbb}
+.prod-row.scan-highlight{background:#E1F5EE;animation:pulse .4s ease}
+@keyframes pulse{0%{background:#9FE1CB}100%{background:#E1F5EE}}
+.prod-chk{width:15px;height:15px;flex-shrink:0;cursor:pointer;accent-color:var(--green)}
+.conf-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;cursor:help}
+.conf-dot.seg{background:var(--green-m)}.conf-dot.rev{background:var(--amber)}.conf-dot.com{background:var(--red)}
+.qty-b{min-width:26px;height:26px;border-radius:6px;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.qty-b.seg{background:var(--green-l);color:var(--green)}.qty-b.rev{background:var(--amber-l);color:var(--amber-d)}.qty-b.com{background:var(--red-l);color:var(--red-d)}
 .prod-info{flex:1;min-width:0}
 .prod-name{font-size:12px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .prod-code{font-size:10px;color:var(--hint);font-family:'Courier New',monospace;margin-top:1px}
-.prod-note{font-size:10px;color:var(--amber-d);margin-top:1px}
-
-/* ── Card footer ── */
-.card-footer{padding:8px 14px;background:#fafaf8;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.prod-note{font-size:10px;margin-top:1px}
+.note-rev{color:var(--amber-d)}.note-com{color:var(--red-d)}
+.card-footer{padding:7px 14px;background:#fafaf8;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:8px}
 .card-total{font-size:11px;color:var(--muted)}
 .card-total strong{color:var(--text)}
-
-/* ── Misc ── */
-.loading{padding:3rem 0;text-align:center;background:var(--surface);border-radius:var(--rl)}
-.spin{font-size:28px;display:inline-block;animation:spin 1s linear infinite;margin-bottom:12px}
-@keyframes spin{to{transform:rotate(360deg)}}
-.alert{padding:10px 14px;border-radius:var(--r);font-size:12px;display:flex;gap:8px;align-items:flex-start;margin-top:10px}
-.alert-r{background:var(--red-l);border:1px solid #F09595;color:var(--red-d)}
-.helper{font-size:12px;color:var(--hint);text-align:center;margin-top:8px}
-.debug{background:#f0f0ec;border:1px solid var(--border);border-radius:var(--r);padding:10px 14px;font-size:11px;color:var(--muted);margin-top:10px;font-family:'Courier New',monospace;line-height:1.6}
-.empty-card{padding:2rem;text-align:center;color:var(--hint);font-size:13px}
+.btn-confirm-all{font-size:11px;font-weight:500;padding:4px 10px;border-radius:5px;border:1px solid var(--green-b);background:var(--green-l);color:var(--green);cursor:pointer;white-space:nowrap;transition:background .15s}
+.btn-confirm-all:hover{background:#c8edd9}
+.empty-card{padding:1.5rem;text-align:center;color:var(--hint);font-size:12px}
 </style>
 </head>
 <body>
@@ -115,25 +154,63 @@ body{background:var(--bg);color:var(--text);min-height:100vh;padding:1.25rem}
 <!-- Top bar -->
 <div class="top-bar no-print">
   <div class="logo">
-    <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="#0F6E56" stroke-width="1.8">
+    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#0F6E56" stroke-width="1.8">
       <path stroke-linecap="round" stroke-linejoin="round" d="M3 21V7l9-4 9 4v14M9 21V9h6v12"/>
     </svg>
   </div>
-  <div><div class="title">Distribución CEDIS</div><div class="subtitle">Traspasos para almacén</div></div>
+  <div><div class="t-title">Distribución CEDIS</div><div class="t-sub">Farmacias Lago</div></div>
+
+  <div class="filter-bar" id="filter-bar" style="display:none">
+    <button class="f-btn active" id="fb-todos" onclick="setFiltro('todos')">Todos</button>
+    <button class="f-btn" id="fb-revisar" onclick="setFiltro('revisar')">⚠ Por revisar</button>
+    <button class="f-btn" id="fb-sin" onclick="setFiltro('sin-confirmar')">☐ Sin confirmar</button>
+  </div>
+
   <div class="spacer"></div>
-  <div class="top-actions" id="result-actions" style="display:none">
-    <button class="btn btn-sm" onclick="window.print()">
-      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+
+  <div class="act-btns" id="act-btns" style="display:none">
+    <button class="btn-sm btn-scan" id="btn-scan" onclick="toggleScanner()">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8H3m6 0V6m6 12v2M4 20h4m4-16v2M4 8V6m0 6H2"/></svg>
+      Modo escáner
+    </button>
+    <button class="btn-sm" onclick="confirmarTodosSeguros()">✓ Confirmar seguros</button>
+    <button class="btn-sm no-print" onclick="window.print()">
+      <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
       Imprimir
     </button>
-    <button class="btn btn-sm" onclick="exportar()">
-      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+    <button class="btn-sm no-print" onclick="exportar()">
+      <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
       Excel
     </button>
-    <button class="btn btn-sm" onclick="reiniciar()">
-      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+    <button class="btn-sm no-print" onclick="reiniciar()">
+      <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
       Nuevo
     </button>
+  </div>
+</div>
+
+<!-- Progress bar -->
+<div class="progress-wrap no-print" id="progress-wrap" style="display:none">
+  <div class="progress-label" id="prog-label"><strong>0</strong> de <strong>0</strong> confirmados</div>
+  <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+  <div class="progress-pct" id="prog-pct">0%</div>
+  <div class="conf-pills" id="conf-pills"></div>
+</div>
+
+<!-- Scanner panel -->
+<div class="scanner-panel no-print" id="scanner-panel">
+  <div class="scan-header">
+    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#0F6E56" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8H3m6 0V6m6 12v2M4 20h4m4-16v2M4 8V6m0 6H2"/></svg>
+    <div>
+      <div class="scan-title">Modo escáner activo</div>
+      <div class="scan-hint">Escanea el código de barras de cada producto — se confirmará automáticamente</div>
+    </div>
+  </div>
+  <div class="scan-input-wrap">
+    <input type="text" class="scan-input" id="scan-input" placeholder="Apunta y escanea... el código aparece aquí" autocomplete="off" autocorrect="off" spellcheck="false">
+  </div>
+  <div class="scan-result" id="scan-result">
+    <!-- Result injected here -->
   </div>
 </div>
 
@@ -141,37 +218,28 @@ body{background:var(--bg);color:var(--text);min-height:100vh;padding:1.25rem}
 <div id="step-upload" class="upload-card">
   <div class="dz-wrap">
     <div class="dropzone" id="dz-v" onclick="pick('iv')">
-      <div class="dz-icon" style="background:#E1F5EE">
-        <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="#1D9E75" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
-      </div>
+      <div class="dz-icon" style="background:#E1F5EE"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#1D9E75" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></div>
       <div><div class="dz-label">Ventas por sucursal</div><div class="dz-sub">Un Excel por sucursal</div></div>
       <div class="dz-badge" id="bv" style="background:#E1F5EE;color:#0F6E56"></div>
-    </div>
-    <div class="chips" id="cv"></div>
+    </div><div class="chips" id="cv"></div>
   </div>
   <div class="dz-wrap">
     <div class="dropzone" id="dz-e" onclick="pick('ie')">
-      <div class="dz-icon" style="background:#E6F1FB">
-        <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="#378ADD" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-      </div>
+      <div class="dz-icon" style="background:#E6F1FB"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#378ADD" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg></div>
       <div><div class="dz-label">Entradas por proveedor</div><div class="dz-sub">Un Excel por proveedor</div></div>
       <div class="dz-badge" id="be" style="background:#E6F1FB;color:#185FA5"></div>
-    </div>
-    <div class="chips" id="ce"></div>
+    </div><div class="chips" id="ce"></div>
   </div>
   <div class="dz-wrap">
     <div class="dropzone" id="dz-n" onclick="pick('in')">
-      <div class="dz-icon" style="background:#FAEEDA">
-        <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="#EF9F27" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h4a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
-      </div>
+      <div class="dz-icon" style="background:#FAEEDA"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#EF9F27" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h4a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
       <div><div class="dz-label">Negados <span style="font-weight:400;color:var(--muted)">(opcional)</span></div><div class="dz-sub">Exportar de Drive como .xlsx</div></div>
       <div class="dz-badge" id="bn" style="background:#FAEEDA;color:#854F0B"></div>
-    </div>
-    <div class="chips" id="cn"></div>
+    </div><div class="chips" id="cn"></div>
   </div>
-  <div id="upload-err" class="alert alert-r" style="display:none"></div>
-  <button class="btn btn-primary" id="btn-run" onclick="procesar()" disabled>
-    <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+  <div id="upload-err" class="alert-r"></div>
+  <button class="btn-run" id="btn-run" onclick="procesar()" disabled>
+    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
     Generar distribución
   </button>
   <div class="helper" id="upload-hint">Necesitas al menos un archivo de ventas y uno de entradas</div>
@@ -179,41 +247,54 @@ body{background:var(--bg);color:var(--text);min-height:100vh;padding:1.25rem}
 
 <!-- Loading -->
 <div id="step-loading" style="display:none" class="upload-card">
-  <div class="loading">
-    <div class="spin">⚙</div>
-    <div style="font-size:14px;color:var(--muted)">Calculando distribución...</div>
-  </div>
+  <div class="loading"><div class="spin">⚙</div><div style="font-size:13px;color:var(--muted)">Calculando distribución...</div></div>
 </div>
 
 <!-- Result -->
 <div id="step-result" style="display:none">
-  <div class="summary-row no-print" id="summary-row"></div>
   <div class="card-grid" id="card-grid"></div>
-  <div id="debug-info" class="debug" style="display:none;margin-top:14px"></div>
+  <div id="debug-info" class="debug"></div>
 </div>
 
 <input type="file" id="iv" multiple accept=".xlsx,.xls" style="display:none" onchange="addF('v',this)">
 <input type="file" id="ie" multiple accept=".xlsx,.xls" style="display:none" onchange="addF('e',this)">
 <input type="file" id="in" multiple accept=".xlsx,.xls" style="display:none" onchange="addF('n',this)">
 
+<!-- Audio context for beep -->
 <script>
-const S={v:[],e:[],n:[],res:null};
+// ── State ──────────────────────────────────────────────────────────────────
+const S={v:[],e:[],n:[],res:null,confirmed:{},filtro:'todos',scannerOn:false,scanStats:{ok:0,warn:0,err:0}};
+
+// ── Audio beeps ────────────────────────────────────────────────────────────
+const AC=new(window.AudioContext||window.webkitAudioContext||function(){})();
+function beep(freq,dur,type='sine',vol=0.3){
+  try{
+    const o=AC.createOscillator(),g=AC.createGain();
+    o.connect(g);g.connect(AC.destination);
+    o.frequency.value=freq;o.type=type;
+    g.gain.setValueAtTime(vol,AC.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,AC.currentTime+dur);
+    o.start(AC.currentTime);o.stop(AC.currentTime+dur);
+  }catch(e){}
+}
+function beepOk(){beep(880,.12);setTimeout(()=>beep(1100,.18),100)}
+function beepWarn(){beep(660,.15,'square',.2)}
+function beepErr(){beep(220,.4,'sawtooth',.25)}
 
 // ── Files ──────────────────────────────────────────────────────────────────
 function pick(id){document.getElementById(id).click()}
 function addF(t,inp){S[t]=[...S[t],...Array.from(inp.files)];inp.value='';drawChips(t);upBtn()}
 function rmF(t,i){S[t]=S[t].filter((_,j)=>j!==i);drawChips(t);upBtn()}
 function drawChips(t){
-  const colors={v:'#1D9E75',e:'#378ADD',n:'#EF9F27'};
+  const clr={v:'#1D9E75',e:'#378ADD',n:'#EF9F27'};
   document.getElementById('c'+t).innerHTML=S[t].map((f,i)=>`
     <div class="chip">
-      <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="${colors[t]}" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+      <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="${clr[t]}" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
       <span class="chip-name" title="${f.name}">${f.name}</span>
       <button class="chip-rm" onclick="rmF('${t}',${i})">×</button>
     </div>`).join('');
   const b=document.getElementById('b'+t);
-  if(S[t].length){b.textContent=S[t].length+' archivo(s)';b.style.display='block';}
-  else b.style.display='none';
+  if(S[t].length){b.textContent=S[t].length+' arch.';b.style.display='block';}else b.style.display='none';
 }
 function upBtn(){
   const ok=S.v.length>0&&S.e.length>0;
@@ -230,10 +311,7 @@ function upBtn(){
     if(fs.length){S[t]=[...S[t],...fs];drawChips(t);upBtn();}
   });
 });
-
-const readBuf=f=>new Promise((ok,fail)=>{
-  const r=new FileReader();r.onload=e=>ok(new Uint8Array(e.target.result));r.onerror=fail;r.readAsArrayBuffer(f);
-});
+const readBuf=f=>new Promise((ok,fail)=>{const r=new FileReader();r.onload=e=>ok(new Uint8Array(e.target.result));r.onerror=fail;r.readAsArrayBuffer(f)});
 
 // ── Parsers ────────────────────────────────────────────────────────────────
 const BC=/^\d{6,14}$/;
@@ -246,9 +324,7 @@ function parseVentas(buf,fname){
   let suc='DESCONOCIDA';
   for(let i=0;i<Math.min(10,rows.length);i++){
     const c=rows[i]?.[0];
-    if(c&&String(c).toLowerCase().includes('almacenes:')){
-      suc=String(c).replace(/almacenes:/i,'').replace(/,/g,'').trim().toUpperCase();break;
-    }
+    if(c&&String(c).toLowerCase().includes('almacenes:')){suc=String(c).replace(/almacenes:/i,'').replace(/,/g,'').trim().toUpperCase();break;}
   }
   if(suc==='DESCONOCIDA'&&fname){const m=fname.replace(/\.[^.]+$/,'').match(/[_-]([A-ZÁÉÍÓÚ\s]+)$/i);if(m)suc=m[1].trim().toUpperCase();}
   const prod=[];
@@ -257,8 +333,7 @@ function parseVentas(buf,fname){
     const cod=String(row[1]).trim().split('.')[0];
     const nom=row[2]?String(row[2]).trim():'';
     if(!nom||nom.toLowerCase().startsWith('total'))continue;
-    const qty=toN(row[5]);
-    if(qty<=0)continue;
+    const qty=toN(row[5]);if(qty<=0)continue;
     prod.push({cod,nom,qty});
   }
   return{suc,prod,_f:fname};
@@ -272,10 +347,8 @@ function parseEntradas(buf,fname){
   for(const row of rows){
     if(!row||!isBC(row[2]))continue;
     const cod=String(row[2]).trim().split('.')[0];
-    const nom=row[3]?String(row[3]).trim():'';
-    if(!nom)continue;
-    const qty=toN(row[4]);
-    if(qty<=0)continue;
+    const nom=row[3]?String(row[3]).trim():'';if(!nom)continue;
+    const qty=toN(row[4]);if(qty<=0)continue;
     prod.push({cod,nom,qty});
   }
   return{prod,_f:fname,_sh:sh};
@@ -290,8 +363,7 @@ function parseNegados(buf,fname){
     for(const row of rows){
       if(!row||typeof row[0]!=='number'||!row[1])continue;
       const nom=String(row[1]).trim();if(!nom)continue;
-      const st=row[9]?String(row[9]).trim():'';
-      if(st==='Rechazado')continue;
+      const st=row[9]?String(row[9]).trim():'';if(st==='Rechazado')continue;
       const key=suc+'::'+nom.toLowerCase();
       if(!seen.has(key)){seen.add(key);prod.push({nom,st,suc});}
     }
@@ -306,6 +378,12 @@ function ovlp(a,b){
   const wb2=new Set(norm(b).split(' ').filter(w=>w.length>3));
   if(!wa.size&&!wb2.size)return 0;
   return[...wa].filter(w=>wb2.has(w)).length/new Set([...wa,...wb2]).size;
+}
+
+function confianza(tipo,parcial,score){
+  if(tipo==='reposicion')return parcial?{niv:'rev',txt:'Entrega parcial — distribución proporcional'}:{niv:'seg',txt:'Código exacto · cantidad completa'};
+  if(tipo==='negado')return score>=0.6?{niv:'rev',txt:`Negado — coincidencia nombre ${Math.round(score*100)}%`}:{niv:'com',txt:`Negado — coincidencia débil ${Math.round(score*100)}% · validar con Compras`};
+  return{niv:'com',txt:'Sin destino · Compras debe asignar'};
 }
 
 // ── Distribution ───────────────────────────────────────────────────────────
@@ -324,159 +402,321 @@ function distribuir(vData,eData,nData){
     }
   const allNeg=nData.flatMap(f=>f.prod);
   const sucursales=[...new Set(vData.map(v=>v.suc))].sort();
-
-  // Build sucursal buckets: {suc: [{cod,nom,qty,tipo,nota}]}
-  const buckets={};
-  sucursales.forEach(s=>{buckets[s]=[]});
-  buckets['SIN ASIGNAR']=[];
+  const buckets={};sucursales.forEach(s=>{buckets[s]=[]});buckets['SIN ASIGNAR']=[];
+  // Build cod→bucket index for scanner lookup
+  const codIndex={};  // cod → [{suc, idx}]
 
   for(const[cod,{nom,qty:llego}]of Object.entries(eMap)){
     if(vMap[cod]){
       const{por}=vMap[cod];
       const total=Object.values(por).reduce((a,b)=>a+b,0);
-      let parcial=llego<total;
-      for(const[suc,needed]of Object.entries(por)){
-        let asignar;
-        if(!parcial){
-          asignar=needed;
-        }else{
-          asignar=Math.floor(needed/total*llego);
-        }
-        if(asignar<=0)continue;
+      const parcial=llego<total;
+      const notaParcial=parcial?`Parcial: ${llego} de ${total} pzas`:'';
+      let asigTotal=0;
+      const entries=Object.entries(por);
+      entries.forEach(([suc,needed])=>{
+        const asig=parcial?Math.floor(needed/total*llego):needed;
+        if(asig<=0)return;
         if(!buckets[suc])buckets[suc]=[];
-        buckets[suc].push({cod,nom,qty:asignar,tipo:'reposicion',nota:parcial?`Parcial: ${llego} de ${total} pzas`:'',llego});
-      }
-      // Handle remainder in partial case
-      if(parcial){
-        let assigned=Object.entries(por).reduce((a,[suc,needed])=>a+Math.floor(needed/total*llego),0);
-        const resto=llego-assigned;
-        if(resto>0){
-          const top=Object.entries(por).sort((a,b)=>b[1]-a[1])[0][0];
-          const existing=buckets[top].find(p=>p.cod===cod);
-          if(existing)existing.qty+=resto;
-        }
-      }
-      // Sobrante
-      if(llego>total){
-        // goes to almacen (not assigned to any sucursal)
+        const idx=buckets[suc].length;
+        const conf=confianza('reposicion',parcial,0);
+        buckets[suc].push({cod,nom,qty:asig,tipo:'reposicion',nota:notaParcial,conf});
+        if(!codIndex[cod])codIndex[cod]=[];
+        codIndex[cod].push({suc,idx});
+        asigTotal+=asig;
+      });
+      if(parcial&&asigTotal<llego){
+        const resto=llego-asigTotal;
+        const top=entries.sort((a,b)=>b[1]-a[1])[0][0];
+        const ex=buckets[top]?.find(p=>p.cod===cod);if(ex)ex.qty+=resto;
       }
     }else{
-      const matches=allNeg.filter(n=>ovlp(nom,n.nom)>=0.35);
-      if(matches.length){
-        const sucs=[...new Set(matches.map(m=>m.suc))];
+      let bestScore=0;
+      for(const n of allNeg){const s=ovlp(nom,n.nom);if(s>bestScore)bestScore=s;}
+      if(bestScore>=0.35){
+        const bestMatches=allNeg.filter(n=>ovlp(nom,n.nom)>=bestScore*0.8);
+        const sucs=[...new Set(bestMatches.map(m=>m.suc))];
         const base=Math.floor(llego/sucs.length),r=llego-base*sucs.length;
         sucs.forEach((suc,i)=>{
           if(!buckets[suc])buckets[suc]=[];
-          buckets[suc].push({cod,nom,qty:base+(i===0?r:0),tipo:'negado',nota:'Negado'});
+          const idx=buckets[suc].length;
+          const conf=confianza('negado',false,bestScore);
+          buckets[suc].push({cod,nom,qty:base+(i===0?r:0),tipo:'negado',nota:conf.txt,conf});
+          if(!codIndex[cod])codIndex[cod]=[];
+          codIndex[cod].push({suc,idx});
         });
       }else{
-        buckets['SIN ASIGNAR'].push({cod,nom,qty:llego,tipo:'sin-asignar',nota:'Sin destino asignado'});
+        const idx=buckets['SIN ASIGNAR'].length;
+        const conf=confianza('sin-asignar',false,0);
+        buckets['SIN ASIGNAR'].push({cod,nom,qty:llego,tipo:'sin-asignar',nota:conf.txt,conf});
+        if(!codIndex[cod])codIndex[cod]=[];
+        codIndex[cod].push({suc:'SIN ASIGNAR',idx});
       }
     }
   }
-
-  // Sort products in each bucket by qty desc
-  for(const suc of Object.keys(buckets)){
-    buckets[suc].sort((a,b)=>b.qty-a.qty);
-  }
-
-  return{buckets,sucursales,eMap,vMap};
+  sucursales.forEach(s=>{buckets[s].sort((a,b)=>b.qty-a.qty)});
+  // Rebuild codIndex after sort
+  const codIndex2={};
+  [...sucursales,'SIN ASIGNAR'].forEach(suc=>{
+    (buckets[suc]||[]).forEach((p,idx)=>{
+      if(!codIndex2[p.cod])codIndex2[p.cod]=[];
+      codIndex2[p.cod].push({suc,idx,prod:p});
+    });
+  });
+  return{buckets,sucursales,eMap,codIndex:codIndex2};
 }
 
-// ── Export (one sheet per sucursal) ───────────────────────────────────────
-function exportar(){
-  if(!S.res)return;
-  const{buckets}=S.res;
-  const wbOut=XLSX.utils.book_new();
-  for(const[suc,prods]of Object.entries(buckets)){
-    if(!prods.length)continue;
-    const hdr=['Código','Producto','Cantidad','Tipo','Notas'];
-    const data=prods.map(p=>[p.cod,p.nom,p.qty,p.tipo,p.nota]);
-    const ws=XLSX.utils.aoa_to_sheet([hdr,...data]);
-    ws['!cols']=[{wch:16},{wch:44},{wch:10},{wch:12},{wch:30}];
-    XLSX.utils.book_append_sheet(wbOut,ws,suc.substring(0,31));
+// ── Scanner ────────────────────────────────────────────────────────────────
+let scanTimer=null;
+
+function toggleScanner(){
+  S.scannerOn=!S.scannerOn;
+  const panel=document.getElementById('scanner-panel');
+  const btn=document.getElementById('btn-scan');
+  if(S.scannerOn){
+    panel.classList.add('visible');
+    btn.classList.add('active');
+    btn.innerHTML=`<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg> Cerrar escáner`;
+    S.scanStats={ok:0,warn:0,err:0};
+    setTimeout(()=>{document.getElementById('scan-input').focus();},100);
+    document.getElementById('scan-input').addEventListener('keydown',onScanKey);
+  }else{
+    panel.classList.remove('visible');
+    btn.classList.remove('active');
+    btn.innerHTML=`<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8H3m6 0V6m6 12v2M4 20h4m4-16v2M4 8V6m0 6H2"/></svg> Modo escáner`;
+    document.getElementById('scan-input').removeEventListener('keydown',onScanKey);
   }
-  XLSX.writeFile(wbOut,'distribucion_almacen.xlsx');
+}
+
+function onScanKey(e){
+  if(e.key==='Enter'){
+    const val=e.target.value.trim();
+    if(val)processScan(val);
+    e.target.value='';
+    e.preventDefault();
+  }
+}
+
+function processScan(raw){
+  if(!S.res)return;
+  const cod=raw.trim().split('.')[0];
+  const entries=S.res.codIndex[cod];
+  const resultEl=document.getElementById('scan-result');
+
+  if(!entries||entries.length===0){
+    // Not found
+    beepErr();
+    S.scanStats.err++;
+    resultEl.className='scan-result err visible';
+    resultEl.innerHTML=`
+      <div class="scan-err-msg">⚠ Código no encontrado en la distribución de hoy</div>
+      <div class="scan-err-sub">Código escaneado: <code>${cod}</code></div>
+      ${scanStatsHtml()}`;
+    return;
+  }
+
+  // Confirm all entries for this barcode
+  let alreadyAll=true;
+  entries.forEach(({suc,idx})=>{
+    const key=`${suc}::${idx}`;
+    if(!S.confirmed[key])alreadyAll=false;
+    S.confirmed[key]=true;
+    const row=document.querySelector(`.prod-row[data-suc="${suc}"][data-idx="${idx}"]`);
+    if(row){
+      row.dataset.confirmed='true';
+      row.classList.add('is-confirmed');
+      const chk=row.querySelector('.prod-chk');if(chk)chk.checked=true;
+      // Flash highlight
+      row.classList.remove('scan-highlight');
+      void row.offsetWidth;
+      row.classList.add('scan-highlight');
+      // Scroll into view
+      row.scrollIntoView({behavior:'smooth',block:'nearest'});
+    }
+    updateCardHeader(suc);
+  });
+
+  const prod=entries[0].prod;
+  const hasWarn=entries.some(e=>e.prod.conf.niv!=='seg');
+
+  if(hasWarn){beepWarn();S.scanStats.warn++;}
+  else{beepOk();S.scanStats.ok++;}
+
+  resultEl.className=`scan-result ${hasWarn?'warn':'ok'} visible`;
+  resultEl.innerHTML=`
+    <div class="scan-product-name">${prod.nom}</div>
+    <div class="scan-destinations">
+      ${entries.map(({suc,prod:p})=>`
+        <div class="scan-dest">
+          <div class="scan-dest-suc">${suc}</div>
+          <div class="scan-dest-qty">${p.qty}</div>
+          <div class="scan-dest-lbl">piezas</div>
+        </div>`).join('')}
+    </div>
+    <div class="scan-meta">
+      ${hasWarn?'⚠ Revisar nota de confianza':'✓ Confirmado automáticamente'}
+      · código: <code>${cod}</code>
+      ${alreadyAll?' · (ya estaba confirmado)':''}
+    </div>
+    ${scanStatsHtml()}`;
+
+  updateGlobalProgress();
+  applyFilter();
+}
+
+function scanStatsHtml(){
+  return`<div class="scan-counter">
+    <div class="scan-cnt"><div class="scan-cnt-num" style="color:var(--green)">${S.scanStats.ok}</div><div class="scan-cnt-lbl">confirmados</div></div>
+    <div class="scan-cnt"><div class="scan-cnt-num" style="color:var(--amber-d)">${S.scanStats.warn}</div><div class="scan-cnt-lbl">revisar</div></div>
+    <div class="scan-cnt"><div class="scan-cnt-num" style="color:var(--red-d)">${S.scanStats.err}</div><div class="scan-cnt-lbl">no encontrados</div></div>
+  </div>`;
 }
 
 // ── Render cards ───────────────────────────────────────────────────────────
 function renderCards(){
-  if(!S.res)return;
+  S.confirmed={};
   const{buckets,sucursales}=S.res;
-
-  // Summary row
-  const allProds=sucursales.flatMap(s=>buckets[s]||[]);
-  const nRep=allProds.filter(p=>p.tipo==='reposicion').length;
-  const nNeg=allProds.filter(p=>p.tipo==='negado').length;
-  const nSin=(buckets['SIN ASIGNAR']||[]).length;
-  document.getElementById('summary-row').innerHTML=
-    `<span class="sum-pill sum-rep">✓ ${nRep} reposiciones</span>`+
-    (nNeg?`<span class="sum-pill sum-neg">⬤ ${nNeg} negados</span>`:'')+
-    (nSin?`<span class="sum-pill sum-sin">! ${nSin} sin asignar</span>`:'')+
-    `<span style="font-size:12px;color:var(--muted);margin-left:4px">${sucursales.length} sucursales</span>`;
-
-  // Cards
   const grid=document.getElementById('card-grid');
   grid.innerHTML='';
 
-  // Regular sucursales
-  for(const suc of sucursales){
+  [...sucursales,'SIN ASIGNAR'].forEach(suc=>{
     const prods=buckets[suc]||[];
+    if(suc!=='SIN ASIGNAR'&&prods.length===0)return;
+    const isSin=suc==='SIN ASIGNAR';
     const card=document.createElement('div');
-    card.className='suc-card';
+    card.className='suc-card';card.dataset.suc=suc;
+    const nSeg=prods.filter(p=>p.conf.niv==='seg').length;
+    const nRev=prods.filter(p=>p.conf.niv==='rev').length;
+    const nCom=prods.filter(p=>p.conf.niv==='com').length;
     const totalPzas=prods.reduce((a,p)=>a+p.qty,0);
+    const confHtml=(nSeg?`<span class="ccs-pill">✓ ${nSeg}</span>`:'')+
+      (nRev?`<span class="ccs-pill">⚠ ${nRev}</span>`:'')+
+      (nCom?`<span class="ccs-pill">! ${nCom}</span>`:'');
     card.innerHTML=`
-      <div class="card-header">
-        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="opacity:0.8;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      <div class="card-header ${isSin?'h-sin':'h-normal'}">
+        <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="opacity:.75;flex-shrink:0">
+          ${isSin?'<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>':'<path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>'}
+        </svg>
         <span class="card-title">${suc}</span>
-        <span class="card-count">${prods.length} productos · ${totalPzas} pzas</span>
+        <div class="card-conf-summary">${confHtml}</div>
+        <span class="card-check-count" id="chk-count-${CSS.escape(suc)}">0/${prods.length} ✓</span>
       </div>
-      <div class="card-body">
-        ${prods.length===0
-          ? '<div class="empty-card">Sin traspasos hoy</div>'
-          : prods.map(p=>`
-            <div class="prod-row">
-              <div class="qty-badge${p.nota.includes('Parcial')?' is-partial':''}">${p.qty}</div>
-              <div class="prod-info">
-                <div class="prod-name" title="${p.nom}">${p.nom}</div>
-                <div class="prod-code">${p.cod}</div>
-                ${p.nota?`<div class="prod-note">${p.nota}</div>`:''}
-              </div>
-            </div>`).join('')}
-      </div>
-      <div class="card-footer no-print">
-        <span class="card-total"><strong>${totalPzas}</strong> piezas totales</span>
-      </div>`;
-    grid.appendChild(card);
-  }
-
-  // Sin asignar card
-  const sinProds=buckets['SIN ASIGNAR']||[];
-  if(sinProds.length){
-    const card=document.createElement('div');
-    card.className='suc-card';
-    card.innerHTML=`
-      <div class="card-header is-sin">
-        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="opacity:0.8;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-        <span class="card-title">Sin asignar</span>
-        <span class="card-count">${sinProds.length} productos</span>
-      </div>
-      <div class="card-body">
-        ${sinProds.map(p=>`
-          <div class="prod-row">
-            <div class="qty-badge" style="background:#FCEBEB;color:#A32D2D">${p.qty}</div>
+      <div class="card-body" id="body-${CSS.escape(suc)}">
+        ${prods.length===0?'<div class="empty-card">Sin traspasos hoy</div>':prods.map((p,idx)=>{
+          const niv=p.conf.niv;
+          return`<div class="prod-row" data-suc="${suc}" data-idx="${idx}" data-conf="${niv}" data-confirmed="false">
+            <input type="checkbox" class="prod-chk no-print" onchange="toggleConfirm('${suc}',${idx},this.checked)" title="${p.conf.txt}">
+            <div class="conf-dot ${niv}" title="${p.conf.txt}"></div>
+            <div class="qty-b ${niv}">${p.qty}</div>
             <div class="prod-info">
               <div class="prod-name" title="${p.nom}">${p.nom}</div>
               <div class="prod-code">${p.cod}</div>
-              <div class="prod-note" style="color:#A32D2D">Compras debe indicar destino</div>
+              ${p.nota?`<div class="prod-note ${niv==='rev'?'note-rev':niv==='com'?'note-com':''}">${p.nota}</div>`:''}
             </div>
-          </div>`).join('')}
+          </div>`;
+        }).join('')}
       </div>
       <div class="card-footer no-print">
-        <span class="card-total" style="color:#A32D2D">Requieren revisión manual</span>
+        <span class="card-total"><strong>${totalPzas}</strong> pzas · ${prods.length} productos</span>
+        ${!isSin&&nSeg>0?`<button class="btn-confirm-all" onclick="confirmarSeguros('${suc}')">✓ Confirmar ${nSeg} seguros</button>`:''}
       </div>`;
     grid.appendChild(card);
-  }
+  });
+  updateGlobalProgress();
+}
+
+// ── Confirm ────────────────────────────────────────────────────────────────
+function toggleConfirm(suc,idx,checked){
+  S.confirmed[`${suc}::${idx}`]=checked;
+  const row=document.querySelector(`.prod-row[data-suc="${suc}"][data-idx="${idx}"]`);
+  if(row){row.dataset.confirmed=checked;checked?row.classList.add('is-confirmed'):row.classList.remove('is-confirmed');}
+  updateCardHeader(suc);updateGlobalProgress();applyFilter();
+}
+function confirmarSeguros(suc){
+  document.querySelectorAll(`.prod-row[data-suc="${suc}"][data-conf="seg"]`).forEach(row=>{
+    const idx=parseInt(row.dataset.idx);
+    S.confirmed[`${suc}::${idx}`]=true;row.dataset.confirmed='true';row.classList.add('is-confirmed');
+    const chk=row.querySelector('.prod-chk');if(chk)chk.checked=true;
+  });
+  updateCardHeader(suc);updateGlobalProgress();applyFilter();
+}
+function confirmarTodosSeguros(){
+  document.querySelectorAll('.prod-row[data-conf="seg"]').forEach(row=>{
+    const suc=row.dataset.suc,idx=parseInt(row.dataset.idx);
+    S.confirmed[`${suc}::${idx}`]=true;row.dataset.confirmed='true';row.classList.add('is-confirmed');
+    const chk=row.querySelector('.prod-chk');if(chk)chk.checked=true;
+  });
+  document.querySelectorAll('.suc-card').forEach(c=>updateCardHeader(c.dataset.suc));
+  updateGlobalProgress();applyFilter();
+}
+function updateCardHeader(suc){
+  if(!S.res)return;
+  const prods=S.res.buckets[suc]||[];
+  const total=prods.length;
+  const confirmed=prods.filter((_,idx)=>S.confirmed[`${suc}::${idx}`]).length;
+  const el=document.getElementById(`chk-count-${CSS.escape(suc)}`);
+  if(el)el.textContent=`${confirmed}/${total} ✓`;
+  const card=document.querySelector(`.suc-card[data-suc="${suc}"]`);
+  if(card)card.classList.toggle('all-confirmed',confirmed===total&&total>0);
+}
+function updateGlobalProgress(){
+  if(!S.res)return;
+  const{buckets,sucursales}=S.res;
+  const allProds=[...sucursales.flatMap(s=>buckets[s]||[]),...(buckets['SIN ASIGNAR']||[])];
+  const total=allProds.length;
+  const confirmed=Object.values(S.confirmed).filter(Boolean).length;
+  const pct=total?Math.round(confirmed/total*100):0;
+  document.getElementById('prog-label').innerHTML=`<strong>${confirmed}</strong> de <strong>${total}</strong> confirmados`;
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('prog-pct').textContent=pct+'%';
+  const nSeg=allProds.filter(p=>p.conf.niv==='seg').length;
+  const nRev=allProds.filter(p=>p.conf.niv==='rev').length;
+  const nCom=allProds.filter(p=>p.conf.niv==='com').length;
+  document.getElementById('conf-pills').innerHTML=
+    `<span class="cpill cpill-s">✓ ${nSeg}</span>`+
+    (nRev?`<span class="cpill cpill-r">⚠ ${nRev}</span>`:'')+
+    (nCom?`<span class="cpill cpill-c">! ${nCom}</span>`:'');
+}
+
+// ── Filter ─────────────────────────────────────────────────────────────────
+function setFiltro(f){
+  S.filtro=f;
+  document.querySelectorAll('.f-btn').forEach(b=>b.className='f-btn');
+  if(f==='todos')document.getElementById('fb-todos').className='f-btn active';
+  if(f==='revisar')document.getElementById('fb-revisar').className='f-btn active-revisar';
+  if(f==='sin-confirmar')document.getElementById('fb-sin').className='f-btn active-sin';
+  applyFilter();
+}
+function applyFilter(){
+  document.querySelectorAll('.prod-row[data-suc]').forEach(row=>{
+    const conf=row.dataset.conf,confirmed=row.dataset.confirmed==='true';
+    let show=true;
+    if(S.filtro==='revisar')show=conf!=='seg';
+    if(S.filtro==='sin-confirmar')show=!confirmed;
+    row.style.display=show?'':'none';
+  });
+  document.querySelectorAll('.suc-card').forEach(card=>{
+    const visRows=[...card.querySelectorAll('.prod-row[data-suc]')].some(r=>r.style.display!=='none');
+    card.classList.toggle('card-hidden',!visRows);
+  });
+}
+
+// ── Export ─────────────────────────────────────────────────────────────────
+function exportar(){
+  if(!S.res)return;
+  const{buckets,sucursales}=S.res;
+  const wbOut=XLSX.utils.book_new();
+  [...sucursales,'SIN ASIGNAR'].forEach(suc=>{
+    const prods=buckets[suc]||[];if(!prods.length)return;
+    const hdr=['Código','Producto','Cantidad','Confianza','Nota','Confirmado'];
+    const data=prods.map((p,idx)=>[p.cod,p.nom,p.qty,
+      p.conf.niv==='seg'?'✓ Seguro':p.conf.niv==='rev'?'⚠ Revisar':'! Compras',
+      p.nota,S.confirmed[`${suc}::${idx}`]?'Sí':'No']);
+    const ws=XLSX.utils.aoa_to_sheet([hdr,...data]);
+    ws['!cols']=[{wch:16},{wch:44},{wch:10},{wch:12},{wch:40},{wch:10}];
+    XLSX.utils.book_append_sheet(wbOut,ws,suc.substring(0,31));
+  });
+  XLSX.writeFile(wbOut,'distribucion_almacen.xlsx');
 }
 
 // ── Steps ──────────────────────────────────────────────────────────────────
@@ -484,7 +724,9 @@ function showStep(s){
   document.getElementById('step-upload').style.display=s==='upload'?'':'none';
   document.getElementById('step-loading').style.display=s==='loading'?'':'none';
   document.getElementById('step-result').style.display=s==='result'?'':'none';
-  document.getElementById('result-actions').style.display=s==='result'?'flex':'none';
+  document.getElementById('filter-bar').style.display=s==='result'?'flex':'none';
+  document.getElementById('act-btns').style.display=s==='result'?'flex':'none';
+  document.getElementById('progress-wrap').style.display=s==='result'?'flex':'none';
 }
 
 async function procesar(){
@@ -494,37 +736,25 @@ async function procesar(){
     const vData=await Promise.all(S.v.map(async f=>parseVentas(await readBuf(f),f.name)));
     const eData=await Promise.all(S.e.map(async f=>parseEntradas(await readBuf(f),f.name)));
     const nData=await Promise.all(S.n.map(async f=>parseNegados(await readBuf(f),f.name)));
-    S.res=distribuir(vData,eData,nData);
-
-    // Debug if empty
-    const{eMap}=S.res;
+    S.res=distribuir(vData,eData,nData);S.confirmed={};S.filtro='todos';S.scanStats={ok:0,warn:0,err:0};
     const dbg=document.getElementById('debug-info');
-    if(Object.keys(eMap).length===0){
-      const vTot=vData.reduce((a,d)=>a+d.prod.length,0);
-      const eTot=eData.reduce((a,d)=>a+d.prod.length,0);
-      dbg.innerHTML='Diagnóstico:<br>'
-        +vData.map(d=>`📊 Ventas [${d._f}] → ${d.suc}: ${d.prod.length} productos`).join('<br>')+'<br>'
-        +eData.map(d=>`📦 Entradas [${d._f}] → hoja: "${d._sh}": ${d.prod.length} productos`).join('<br>')+'<br>'
-        +(vTot===0?'⚠ No se leyeron productos de ventas.<br>':'')
-        +(eTot===0?'⚠ No se leyeron productos de entradas.<br>':'');
+    if(Object.keys(S.res.eMap).length===0){
+      dbg.innerHTML='Diagnóstico:<br>'+vData.map(d=>`📊 ${d._f} → ${d.suc}: ${d.prod.length} prods`).join('<br>')+'<br>'+eData.map(d=>`📦 ${d._f} → "${d._sh}": ${d.prod.length} prods`).join('<br>');
       dbg.style.display='block';
     }else dbg.style.display='none';
-
-    renderCards();
-    showStep('result');
+    renderCards();setFiltro('todos');showStep('result');
   }catch(e){
     const el=document.getElementById('upload-err');
-    el.innerHTML='<strong>Error:</strong> '+e.message;
-    el.style.display='flex';
-    showStep('upload');
+    el.innerHTML='<strong>Error:</strong> '+e.message;el.style.display='block';showStep('upload');
   }
 }
 
 function reiniciar(){
-  S.v=[];S.e=[];S.n=[];S.res=null;
+  S.v=[];S.e=[];S.n=[];S.res=null;S.confirmed={};S.filtro='todos';S.scannerOn=false;
   ['v','e','n'].forEach(drawChips);
   document.getElementById('upload-err').style.display='none';
   document.getElementById('debug-info').style.display='none';
+  document.getElementById('scanner-panel').classList.remove('visible');
   upBtn();showStep('upload');
 }
 </script>
